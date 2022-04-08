@@ -2,6 +2,7 @@ package br.com.alura.forum.modelo;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,9 +10,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.validation.Valid;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import br.com.alura.forum.controller.form.UsuarioForm;
+import br.com.alura.forum.repository.TopicoRepository;
 
 @Entity
 public class Usuario implements UserDetails {
@@ -125,6 +130,23 @@ public class Usuario implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public void atualizar(@Valid UsuarioForm form) {
+		this.nome = form.getNome();
+		this.email = form.getEmail();
+		this.senha = form.getSenha();
+	}
+
+	public boolean hasTopicos(TopicoRepository topicoRepository) {
+		Optional<List<Topico>> optional = topicoRepository.findByAutorId(this.id);
+		if(optional.isPresent()) {
+			for(Topico topico : optional.get()) {
+				topicoRepository.delete(topico);		
+			}
+			return true;
+		}
+		return false;
 	}
 
 }

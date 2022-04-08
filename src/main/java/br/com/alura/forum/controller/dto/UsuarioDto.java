@@ -3,6 +3,8 @@ package br.com.alura.forum.controller.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import br.com.alura.forum.modelo.Usuario;
 
 public class UsuarioDto {
@@ -41,15 +43,8 @@ public class UsuarioDto {
 		this.nome = usuario.getNome();
 	}
 
-	public static List<UsuarioDto> converter(List<Usuario> usuarios) {
-		List<UsuarioDto> usuariosDto = new ArrayList<>();
-		
-		for(int i=0; i < usuarios.size(); i++ ) {
-			Usuario usuario = usuarios.get(i);
-			usuariosDto.add(new UsuarioDto(usuario));
-		}
-		
-		return usuariosDto;
+	public static Page<UsuarioDto> converter(Page<Usuario> usuarios) {
+		return usuarios.map(UsuarioDto::new);
 	}
 
 	public static UsuarioDto converter(Usuario usuario) {
