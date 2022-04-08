@@ -25,8 +25,7 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.ant("/**"))
                 .build()
                 .ignoredParameterTypes(Usuario.class)
-                .globalOperationParameters(
-                        Arrays.asList(
+                .globalOperationParameters(Arrays.asList(
                                 new ParameterBuilder()
                                     .name("Authorization")
                                     .description("Header para Token JWT")

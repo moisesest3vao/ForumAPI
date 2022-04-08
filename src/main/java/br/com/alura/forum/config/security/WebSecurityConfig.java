@@ -48,6 +48,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST,"/auth").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 		.antMatchers("/swagger-ui/**").permitAll()
+		.antMatchers("/h2-console/**").permitAll()//este matcher deve ser removido ao entrar em produção
+		.antMatchers("/usuario/**").permitAll()
 		.anyRequest().authenticated()
 		.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 		.and().csrf().disable()
